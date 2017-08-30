@@ -1,0 +1,91 @@
+CS 157A August 29th, 2017 
+
+Database Evaluation - 
+
+Any answer that is given from a relational database, it will be 100% accurate. NoSQL cares more about efficiency that accuracy. This is why we will be using a relational database (Oracle)
+
+*Rants about the future of NoSQL and how Amazon and Google are working towards the future to make NoSQL 100% accurate*
+
+Relational Databases 
+*Manages larges amount of data. Creates the illusion as if you are the only user and doesn’t need to worry about locks and such. Allows for concurrent access to compute for multiple users. Secure access. Supports Atomic (ACID) [A? Constancy Isolation Durability] access to large amounts of data. This is done through a Redo and Undo log incase the disks crashes. Slow access times, but the data will always be there. Many applications for RDBMS
+
+SQL -
+
+Data Definition Language (DDL): ?
+
+Data Manipulation Language (DLM): Insert, update, delete *maybe select. Select is a read only, which is why it’s not really manipulation. 
+
+SQL Processing: You ask SQL “What?” And the engine will decide the “How” This is the art of the query optimizer
+
+SQL Compiler: 
+	Query Parser: builds a tree structor
+	Query Preprocessor: turns tree into algebraic operations 
+	Query Optimizer: turns the query into an execution 
+
+Execution Engine: ?
+
+Transaction Processing: This is why banks will use SQL. Query and DML (IUD) statements and group into transactions to proved ACID properties. 
+
+Storage and Buffer Management: Stored on a secondary disk. Buffer Cache is made to allow for quick access of data when someone else needs it. When the user is done with the buffer, operating system will then take the buffer and write them all to disk. Takes out the need for users to wait for the information to be written to the disk. Database will use it’s buffer cache so it doesn’t have to rely on the operating system. 
+
+Abstraction - 
+
+There are many views in a database. This describes how the users see the data. Data independence is important. 
+
+
+SQL Data Model - 
+
+1. Mathematical Representation of Data
+	ex. Relational model = tree -> Beers(name, manf)
+	ex semi-structured model = tree/graphs -> Beers(name: String, manf: String)
+2. Operations of Data
+3. Constraints
+SQL will treat any input and output as a table. Even one result is a table with 1 row and 1 one column. *A relation is always a table.* 
+SQL engine will enforce any constrains that you put for it until you change it. It will never override what you give it. 
+
+Relation name is also important 
+• Row = tuples
+• Column = attributes 
+	*Columns can never be deleted only rows
+
+Database is a collection of relation. Relations are good because the are simple and generally match how we think about data. 
+
+Keys in the relational database is similar to how they work in Swift. 
+UEC: Unique Entity Count
+The Primary Key can be defined for multiple columns and written in differently than the primary key was defined, but performance will take a massive hit.The output will still be the same. 
+	Smaller columns should be run first and larger columns last so the computer isn’t jumping from fast to slow all the time. 
+
+A query can have subquery. The subquery will pass the information to the query from the memory. Much faster since it bypasses the need to read and write from disk. This is why Oracle can make so much money, it is super efficient. 
+
+Data Types -
+
+INT or INTEGER (synonym) 
+REAL or FLOAT (synonym) 
+Char(n) = is a fixed length string of n characters. (Stores all characters through n, even if they’re unused) —Faster access time than VARCHAR
+VARCHAR(n) = variable-length string up to n character. (Stores up to the number of characters on the disk up to n characters) *Needs to read more often because we don’t know where each char starts and ends. 
+
+*Disk is a super important because 60% of time spent in the program is accessing and writing data. 
+
+Nil in SQL is “I Don’t Know?” Nil = nil means “I don’t know” = “I don’t know” *A primary key can never be nil*
+ 
+“Joe\’s Bar” = ‘Joe’’s Bar’
+
+DATES and TIMES are types in SQL
+Dates are stored as: Year-Month-Day – DATE ‘yyyy-mm-dd’
+Times are stored as  Hour:Minute:Second - TIME ’15:30.02.5’
+
+Declaring a primary key *****DON’T EVER USE*****
+CREATE TABLE Beers (
+	name CHAR(20) UNIQUE,
+	MANF char(20) 
+);
+
+Multi-attribute Key
+
+CREATE-TABLE Sells (
+	bar CHAR(20)
+	beer VARCHAR(20)
+	price REAL
+	PRIMARY KEY (bar, beer)
+);
+
