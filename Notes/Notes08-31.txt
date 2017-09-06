@@ -1,0 +1,67 @@
+CS 157A - Notes 08/31 
+
+Relational Algebra: 
+
+Algebra will be done on sets and bags. A sets means that there is no duplicate in the data. If there is a duplicate, SQL will delete it and return only one instance of that value. Think of a column with ages and that being projected onto a row. 
+
+Relational Algebra (Notes)- 
+
+An algebra whose operands are relations or variables that represent relations. 
+* Union, intersection, and difference: Usual set operations, but •both operands mist have the same relation schema•
+	Difference is the rows that are different in Table1 – Table2, and is unrelated to the answer from Table2 – Table1
+* Selection: picking certain rows 
+* Projection: picking certain columns 
+	Typically done on one table and multiple columns from that table
+* Products and Joins: compositions of relations 	
+	Joins is the evil “you can’t live with and you can’t live with” Join is very useful, but slows down EVERYTHING. 
+	Normalize the table by breaking them up and the going the tables together. That’s why it takes so much time/processing, but all the data is 100% accurate. 
+	Product will be a n*m multiplications where n is the rows in table1 and m is the number of rows in table2.	
+		After that, we do a join operation. 
+	Join is a Cartesian product(expensive operations) and then a filtering of the data. 
+* Renaming of relations and attributes 
+	Changing the variable, but keeping the old name that was already existing. Example: changing address -> home address
+	This will not have to change the schema, it just lets the attribute change the name. But because there are two names, performance will take a bit of a hit. 
+
+***Check the notes for the syntax on what to write***
+
+Lots of stuff about join, products, and theta joins. Theta-join = filtering 
+Key words in SQL are generally uppercase, but good writing syntax is ALL UPPERCASE 
+Natural Join will sometimes result in an empty table if there are two rows that have no matches.
+If there are two columns with the same name, the amount of columns is I + J - #of columns 
+
+Theta join and natural join behave similarly, but the column names can be different names. In the output they are called the same way. The output table will have the I + J columns which is the same as the cartesian product. 
+
+**Homework is to make a Cartesian product 8x8 with 2x4 table, then filer**
+
+Renaming -
+
+The (ro [p]) operator gives a new schema to a relation. SQL will change the data in the table to be something new. 
+	ie. Converting from USD to Japanese Yen. You can now also call the table data in Yen and it will give you the output. 
+	Notation: R1(A1,…,An): = R2
+
+Sequence of Assignments - 
+
+Some operations will happen first
+1. [σ,π, 
+2. [X,⋈]
+3. [ ∧]
+4. [U, –]
+
+Expression Trees - 
+
+The root will always be the solution for your answer.
+Leaves are the operants. Arcs will pass one operator to the other. 
+Read from the disk and do the join until you reach the end of the table. 
+
+The compiler will convert the statements that you write into a tree and execute them. This is how all of them are run in SQL. See page 27***
+
+
+**Go back and review slides. Also upload them to GitHub.
+
+Bags - 
+
+Everything in SQL is a table, Relational Algebra means Algebra on a table. 
+A bag is like a set, but an element may appear more than once. {1,2,1,3} is a bag but not a set. {1,2,3} is a set and a bag. [Square Rectangle Relationship]
+Bags are needed for column projections 
+
+ENDED on Page 40. 
