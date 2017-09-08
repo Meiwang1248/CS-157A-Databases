@@ -17,10 +17,42 @@ When something needs to be merged, the entity set that satisfies the condition w
 	They are useful, but having to use them requires a join which will cause a slowdown in performance
 If you cannot make a unique identifier for everything in the table, or it’s unlikely to happen, then use a weak entity set 
 
-ER (Entities/Relationships) Design: 
+
+Entity vs. Attribute:
 
 *Questions to ask when making tables
 	Should a concept be modeled as an entity or an attribute? 
+		ex. Finding employees that live in city of an address table. But if you just need the address as one string, then you can keep it as an attribute of the employee table
 	Should a concept be modeled as an entity or a relationship?
 		ex. Price of a beer at a bar is a relationship of which bar and which beer you’re buying
 	What constraints should be captured?
+
+Depends upon the use we want to make of the information and the semantics of the data.
+	For multiple addresses, we would want to make a new table. Because we don’t know how many addresses each employee would need, there’s no way for us to determine how many they may have. 
+	
+A relationship will be modeled as a table with the primary key from the attributes of the relationship. 	
+	The table of beer example will be a table with three columns of “beer”, “bars”, and “price”
+
+How the users are going to use the database will determine the attributes and relationships that you will need to build into the database. *Frequent Queries not Flexible Queries*
+It’s also possible to have more than one relation with tables. 
+
+From ER Diagrams to Relations:
+
+•Entity Set-> Relation
+	Entity-> tuple or row
+	Attribute-> attribute 
+•Relationship-> Table with attributes that are…
+	The keys of the connected entity sets
+	Attributes of the relationship itself 
+It’s okay to combine two relations in to one relation if…
+	1. The relation for entity set E 
+	2. The relation for many-one relationships of which E is the “many”.
+	If one relation uses another relationship, replace the name of the relationship with the primary keys of that relationships
+
+Subclasses: Three Approaches 
+1. Object-oriented: One relation per subset of subclasses, with all relevant attributes
+2. Use nulls: One relation; entities have NULL in attributes that don’t belong to them
+3. E/R style: (This shows how the tables are joined) One relation for each subclass: 
+	Key attributes 
+	Attributes of that subclass 
+	*This is done to save storage space. But hurts in performance. Super common theme in this class. 
