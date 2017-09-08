@@ -1,0 +1,26 @@
+CS 157A - Notes 09/07 
+
+Entity Sets –
+
+Weak Entity Sets: 
+An entity set should satisfy one condition. 
+	It is more than the primary key; it has at least one more non-key attribute 
+	It is the “many” in a many-one or many-many relationship 
+	*if neither condition is met, merge this entity set into another entity set*
+When something needs to be merged, the entity set that satisfies the condition will remain, and the other table will be merged into it. 
+	Ex. This will give the “beers” table from the example the primary key of name and the non-key attribute of manf(manufacture)
+
+*Don’t overuse weak entity sets*
+	It’s too tempting to make all entity sets weak, because the programmer thinks that anything coulee be a key itself 
+	We can usually create unique ID’s for entity sets. 
+		Ex. SSN’s, automobile VINs, etc. 
+	They are useful, but having to use them requires a join which will cause a slowdown in performance
+If you cannot make a unique identifier for everything in the table, or it’s unlikely to happen, then use a weak entity set 
+
+ER (Entities/Relationships) Design: 
+
+*Questions to ask when making tables
+	Should a concept be modeled as an entity or an attribute? 
+	Should a concept be modeled as an entity or a relationship?
+		ex. Price of a beer at a bar is a relationship of which bar and which beer you’re buying
+	What constraints should be captured?
