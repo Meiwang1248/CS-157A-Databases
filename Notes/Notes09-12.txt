@@ -1,0 +1,68 @@
+CS 157A - Notes 09/12
+
+Schema Design and Normalization: 
+
+Functional Dependencies–
+
+Functional Dependencies (FD) are used in normalizing relations by decomposing a relation into tow or more to remove certain dependencies-> idea of a relation key.
+FD on a relation R states that “if any types in R free on the attributes X1, X2,…,Xn then they also have to agree on the attributes Y1, Y2, … , Ym.”
+	This is important because if there are redundancies, one attribute is updated, but the other is not. 
+	FD’s are read as X->Y, X implies Y.
+	We will only be looking at one column at a time on the right side, and then they are compared to every single part on the left
+		• X1, X2, X3,…,Xn = Y1
+		• X1, X2, X3,…,Xn = Y2
+		• ……
+		• X1, X2, X3,…,Xn = Ym
+
+Keys of Relations
+
+Set of all attributes are called key (K) iff: 
+	This set of attributes functionally determines all other attributes. No two tables Weill are on all attributes including K.
+	K must be minimal, and K determines all other attributes of R. 
+
+Set of attributes that contain K is called the super key for relation R. Superkey satisfies the first condition but not necessarily the second. 
+
+K is a superset but no subset of K is a super key. (A super key is the primary key plus any other column)
+	*A composite key is a primary key that has more than one column. 
+ 
+Even using two columns will satisfy the minimality clause of K, as long as it’s the smallest way to include all of the columns of the table. 
+
+You can have a table with more than one primary key, before the table has been fully designed.
+	{Subject, Class Number} / {Teacher, Class Time} are the same, but when the table is created onehas to be declared and you ignore all of the other ones.
+
+
+Trivial FD–
+
+*DON’T USE*
+This means that the FD is useless and we can throw it away. If the right hand side is a subset of the data of the left hand side, then it’s useless. 
+	It is like saying title year-> title. We’re saying title = title. 
+	Think math trivial, 1 = 1. 
+
+Inference Rules 
+
+*Reflexivity = Triviality 
+*Augmentability = A-> B, then AC-> BC
+*Transitivity = A-> B and B->C, then A->c
+
+Closure of Y (denoted Y+). Is a superset of Y and has all attributes that are determined knowing Y given the set S of FDs. 
+	*Candidate key are all attributes that are not a part of RHS of out FDs.
+	*Start with Y+ = Y
+	*Induction: Search for a subset of current Y+ that matches the LHS of one of the FDs		
+		Repeat until there’s nothing left to add to Y+
+	*Closure Y+ is a superkey.
+
+Relational Schema Design–
+
+Goal of relational Chema design is to avoid anomalies. 
+	Redundancy: Info may be repeated unnecessarily 
+	Update Anomaly: One occurrence of a fact is changed, but not all occurrences. 
+	Deletion Anomaly: Valid fact is lost when a tuple is deleted.
+Normalization is to be used based on which information you want to keep in the table. 
+
+
+Boyce-Codd Normal Form - BCNF–
+
+BCNF: Is a condition on a relation Chema that eliminates potential possible anomalies. 
+We say a relation R is a BCNF if whenever X-> Y is a nontrivial FD that holds in R, then X is a superkey.
+	Remember, nontrivial means Y is not contained in X
+	Remember, a superkey is any superset of a key
