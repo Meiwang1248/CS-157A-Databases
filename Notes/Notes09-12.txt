@@ -1,4 +1,4 @@
-CS 157A - Notes 09/12
+CS 157A - Notes 09/12 - 09/14
 
 Schema Design and Normalization: 
 
@@ -20,15 +20,15 @@ Set of all attributes are called key (K) iff:
 	This set of attributes functionally determines all other attributes. No two tables Weill are on all attributes including K.
 	K must be minimal, and K determines all other attributes of R. 
 
-Set of attributes that contain K is called the super key for relation R. Superkey satisfies the first condition but not necessarily the second. 
+Set of attributes that contain K is called the superkey for relation R. Superkey satisfies the first condition but not necessarily the second. 
 
-K is a superset but no subset of K is a super key. (A super key is the primary key plus any other column)
+K is a superset but no subset of K is a superkey. (A superkey is the primary key plus any other column)
 	*A composite key is a primary key that has more than one column. 
  
 Even using two columns will satisfy the minimality clause of K, as long as it’s the smallest way to include all of the columns of the table. 
 
 You can have a table with more than one primary key, before the table has been fully designed.
-	{Subject, Class Number} / {Teacher, Class Time} are the same, but when the table is created onehas to be declared and you ignore all of the other ones.
+	{Subject, Class Number} / {Teacher, Class Time} are the same, but when the table is created one has to be declared and you ignore all of the other ones.
 
 
 Trivial FD–
@@ -38,13 +38,13 @@ This means that the FD is useless and we can throw it away. If the right hand si
 	It is like saying title year-> title. We’re saying title = title. 
 	Think math trivial, 1 = 1. 
 
-Inference Rules 
+Inference Rules (->) 
 
 *Reflexivity = Triviality 
 *Augmentability = A-> B, then AC-> BC
 *Transitivity = A-> B and B->C, then A->c
 
-Closure of Y (denoted Y+). Is a superset of Y and has all attributes that are determined knowing Y given the set S of FDs. 
+Closure of Y (denoted Y+). Is a superset of Y and has all attributes that are determined knowing Y given the set S of FDs 
 	*Candidate key are all attributes that are not a part of RHS of out FDs.
 	*Start with Y+ = Y
 	*Induction: Search for a subset of current Y+ that matches the LHS of one of the FDs		
@@ -66,3 +66,34 @@ BCNF: Is a condition on a relation Chema that eliminates potential possible anom
 We say a relation R is a BCNF if whenever X-> Y is a nontrivial FD that holds in R, then X is a superkey.
 	Remember, nontrivial means Y is not contained in X
 	Remember, a superkey is any superset of a key
+
+If an (inference)-> doesn’t have a superkey, then we are in violation of BCNF
+
+Decomposing Relations–
+
+This involves splitting attributes of R to make the schemas of two or more new relations.
+Decomposition should eliminate anomalies if done right. 
+
+	1. First take the left hand side and compute the closure of that. Take all the columns that are on the left hand side. X: X^+
+		* Choose the left hand side of the relation and set it equal to R1 = X^+
+		* Now we break the table into two tables. Where R2 = R - (X^+ minus(-) X). R1 = X^+
+		* Project the FDs for each new relation. Some of the FDs will go to table 1 and the others to table 2 
+	2. Recursively decompose R1 and R2 
+	3. Return the union of all of these decompositions 
+
+Is decomposition all good?
+	No, performance is bad because we will need to join the two tables back together 
+	Lossless join means that no information has been lost from the join. 
+	Loose-y join means that information has been lost 
+	It’s impossible to get all three BCNF properties (which isn’t great)
+
+
+3rd Normal Form (3NF)–
+
+There is one structure of FD’s that cause troubles when we decompose. 
+	Assume R(A,B,C): AB-> C abd C->B
+	Two conditions: meet one and you’re okay
+		1. Left hand side is a superkey
+		2. Right hand side is a prime (Portion of a primary key)
+
+Testing for Lossless Join–
