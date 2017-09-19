@@ -1,0 +1,35 @@
+
+Craig Huff
+Homework #1 (5 pts) 
+Questions on Chapter (2): Please answer the following questions: 
+Q1 [1.5 pts]: How many different ways (considering orders os tuples and attributes) are there to represent a relation instance if that instance has: 
+Three attributes and three tuples? 3! * 3! = 6 * 6 = 36 different ways
+Four attributes and five tuples? 4! * 5! = 24 * 120 = 2880 different ways
+N attribues and m tuples?  N! * m! = N!m! different ways  
+Q2 [1.5 pts]: Write expressions of relational algebra to answer the following queries
+What PC models have a speed of at least 3.00?  R1 := σspeed ≥ 3.00 (PC) Answer := πmodel (R1)    
+Which manufacturers make laptops with a hard disk of at least 100 GB? R1 := Product ⋈ σhd ≥ 100 (Laptop) Answer := πmaker(R1)    
+  
+Find the model number and price of all products (of any type) made by manufacturer B? R1 := σmaker = B (Product) R2 := R1 ⋈ ((Laptop ∪ PC ∪ Printer ) Answer := πR3.price,R3.model(R2)
+
+ 
+Find the model numbers of all color laser printers? R1 := σcolor = true AND type = laser (Printer) Answer := π model(R1)
+
+Find those manufacturers that sells laptops but not PC’s?  R1 := π maker(σtype = Laptop (Product)) R2 := π maker(σtype = PC (Product)) Answer := R1 – R2  
+Find those hard disk sizes that occur in two or more PC’s? R1 := (PC) R2 := (PC) Answer := π R1.hd(R1 ⋈R1.hd = PC.hd AND R1.model ≠ PC2.model (PC))  
+Q3 [2 pts]: For the above schema <product, PC, Laptop, Printer> tables, express the following constraints. Also, for the data samples given above, indicate any violations to your constraints: a) A PC with a processor speed < 2.00 must not sell for more than $500?  	σspeed ≥ 3.00 (PC) = Ø
+Violations: 
+b)A laptop with a screen size < 15.4” must have at least a 100 GB Hard Disk or sell for less than $1,000? 	σscreen <15.4 (σhd ≥100 OR price < 1000(Laptop)) = Ø Violations:  c) No manufacturer of PC’s may also make laptops? 	π maker(Product ⋈PC) ∩ π maker(Product ⋈Laptop) = Ø Violations:   d) A manufacturer of a PC must also make a laptop with at least as great a processor speed? 
+First, we need to find which manufactures make both PC’s and Laptops 	R1 := π maker(Product ⋈PC) ∩ π maker(Product ⋈Laptop)
+
+Second, we need to find the highest speed of PC for each manufacture 
+ 
+⍴(T1, π maker, speed(R1 ⋈PC))
+⍴(T2, T1 - π T1.maker, T1.speed(σTemp1.speed <Temp2.speed AND Temp1.maker = Temp2.Maker(⍴(Temp1, T1) x ⍴(Temp2, T1))))
+
+Next, we find the highest speed of each laptop of each manufacturer
+⍴(T3, π maker, speed(R1 ⋈Laptop))
+⍴(T4, T3 - π Temp3.maker, Temp3.speed(σTemp3.speed <Temp4.speed AND Temp3.maker = Temp4.Maker(⍴(Temp3, T1) x ⍴(Temp4, T1))))
+
+Finally, we check to make sure the speed of each manufacture makes a laptop with speed as least as fast as the fastest PC processor. 
+	σtemp2.maker = temp4.maker AND Temp2.speed ≥ Temp4.speed (Temp2 x Temp4) = Ø 
