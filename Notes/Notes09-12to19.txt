@@ -1,0 +1,131 @@
+CS 157A - Notes 09/12 - 09/14 - 09/19
+
+Schema Design and Normalization: 
+
+Functional Dependencies–
+
+Functional Dependencies (FD) are used in normalizing relations by decomposing a relation into tow or more to remove certain dependencies-> idea of a relation key.
+FD on a relation R states that “if any types in R free on the attributes X1, X2,…,Xn then they also have to agree on the attributes Y1, Y2, … , Ym.”
+	This is important because if there are redundancies, one attribute is updated, but the other is not. 
+	FD’s are read as X->Y, X implies Y.
+	We will only be looking at one column at a time on the right side, and then they are compared to every single part on the left
+		• X1, X2, X3,…,Xn = Y1
+		• X1, X2, X3,…,Xn = Y2
+		• ……
+		• X1, X2, X3,…,Xn = Ym
+
+Keys of Relations
+
+Set of all attributes are called key (K) iff: 
+	This set of attributes functionally determines all other attributes. No two tables Weill are on all attributes including K.
+	K must be minimal, and K determines all other attributes of R. 
+
+Set of attributes that contain K is called the superkey for relation R. Superkey satisfies the first condition but not necessarily the second. 
+
+K is a superset but no subset of K is a superkey. (A superkey is the primary key plus any other column)
+	*A composite key is a primary key that has more than one column. 
+ 
+Even using two columns will satisfy the minimality clause of K, as long as it’s the smallest way to include all of the columns of the table. 
+
+You can have a table with more than one primary key, before the table has been fully designed.
+	{Subject, Class Number} / {Teacher, Class Time} are the same, but when the table is created one has to be declared and you ignore all of the other ones.
+
+
+Trivial FD–
+
+*DON’T USE*
+This means that the FD is useless and we can throw it away. If the right hand side is a subset of the data of the left hand side, then it’s useless. 
+	It is like saying title year-> title. We’re saying title = title. 
+	Think math trivial, 1 = 1. 
+
+Inference Rules (->) 
+
+*Reflexivity = Triviality 
+*Augmentability = A-> B, then AC-> BC
+*Transitivity = A-> B and B->C, then A->c
+
+Closure of Y (denoted Y+). Is a superset of Y and has all attributes that are determined knowing Y given the set S of FDs 
+	*Candidate key are all attributes that are not a part of RHS of out FDs.
+	*Start with Y+ = Y
+	*Induction: Search for a subset of current Y+ that matches the LHS of one of the FDs		
+		Repeat until there’s nothing left to add to Y+
+	*Closure Y+ is a superkey.
+
+Relational Schema Design–
+
+Goal of relational Chema design is to avoid anomalies. 
+	Redundancy: Info may be repeated unnecessarily 
+	Update Anomaly: One occurrence of a fact is changed, but not all occurrences. 
+	Deletion Anomaly: Valid fact is lost when a tuple is deleted.
+Normalization is to be used based on which information you want to keep in the table. 
+
+
+Boyce-Codd Normal Form - BCNF–
+
+BCNF: Is a condition on a relation Chema that eliminates potential possible anomalies. 
+We say a relation R is a BCNF if whenever X-> Y is a nontrivial FD that holds in R, then X is a superkey.
+	Remember, nontrivial means Y is not contained in X
+	Remember, a superkey is any superset of a key
+
+If an (inference)-> doesn’t have a superkey, then we are in violation of BCNF
+
+Decomposing Relations–
+
+This involves splitting attributes of R to make the schemas of two or more new relations.
+Decomposition should eliminate anomalies if done right. 
+
+	1. First take the left hand side and compute the closure of that. Take all the columns that are on the left hand side. X: X^+
+		* Choose the left hand side of the relation and set it equal to R1 = X^+
+		* Now we break the table into two tables. Where R2 = R - (X^+ minus(-) X). R1 = X^+
+		* Project the FDs for each new relation. Some of the FDs will go to table 1 and the others to table 2 
+	2. Recursively decompose R1 and R2 
+	3. Return the union of all of these decompositions 
+
+Is decomposition all good?
+	No, performance is bad because we will need to join the two tables back together 
+	Lossless join means that no information has been lost from the join. 
+	Loose-y join means that information has been lost 
+	It’s impossible to get all three BCNF properties (which isn’t great)
+
+
+3rd Normal Form (3NF)–
+
+There is one structure of FD’s that cause troubles when we decompose. 
+	Assume R(A,B,C): AB-> C abd C->B
+	Two conditions: meet one and you’re okay
+		1. Left hand side is a superkey
+		2. Right hand side is a prime (Portion of a primary key)
+
+Multivalued dependency (MVD) -> 4NF
+
+MVD is an assertion that two attributes or set of attributes (X and Y) are independent of each other
+We cannot split either the left of the right side in MVD (no decomposition) 
+
+Fourth Normal Form –
+The strongest and most strict normal form. Stricter than 3NF and BCNF
+	Relation to 3NF and BCNF is a square rectangle. Just because you have one doesn’t mean you have the others. 
+MVD’s are read like they’re FDs. 
+
+A relation R is in 4NF if whenever X->->Y is a nontrivial MVD, then X is a superkey
+	Nontrivial MVD: 
+	1. Y Is not a subset of X 
+	2. X and Y are not, together, represent all of the attributes 
+*Note, the definition of superkey still applies to FD. 
+
+Decomposition of of 4NF
+
+If X->->Y is in 4NF violation, then we decompose
+	1. XY is one of the decomposed relations 
+	2. X U (R-X-Y) ºWe want all the data but X-Y
+
+If there is no violation, then leave the table the way it was. 
+
+
+
+
+
+
+
+
+
+

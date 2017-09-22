@@ -1,0 +1,48 @@
+Notes September 21, 2017
+
+Logical Database Model:
+
+We’ll be using Entity/Relationship Diagram Models -E/R
+	These are used to map the logical model to the physical model (relational model-> relations)
+
+E/R Model and Diagrams–
+
+Allows for the sketching of a database and schema design 
+	Include some constraints 
+
+*Entity sets are represented as rectangles 
+*Attributes are drawn outside of the entity sets and are circle. They are then connected to the entity sets.
+
+Entity Sets–
+
+Entity: “thing” or an object (tuple in physical level)
+Entity Set: collection of similar entities; typically implemented as a relations (relation in physical level)
+Attribute: property of an entity set
+	Attributes are simple values, e.g. integers or character strings
+Relationships = connection between two or more entity sets - binary or multi-way relationships.
+
+Relationships–
+
+Most common relationship is binary or ternary, but more is rare. 
+These are represented in the drawing as diamond with lines to each of the entity sets involved. 
+	These can be bi-directional or uni-directional
+A solid line connection to two entity sets is a many-to-many relationship 
+
+Relationship Set–
+
+The current “value” of an entity set is the set of entity that belong to it. 
+	The “value” of a a relationship is a relationship set, a set of tuples with one tuple for each related entities from the relevant entity sets. 
+We can add attributes that are owned by the relationship set of the two entity sets 
+
+Many->One & Many->Many & One->One Relationships 
+
+Many->One: Connection entity sets which will have either 0 or 1 connection to 1 connection in the other table. 
+One->Many: there is either 0 or 1 connection that is related to 0 or more entities (tuples)
+	*Many-Many is a Many->One relationship in both directions i.e. special case 
+One->One: A tuple in one table will relate to 0 or 1 tuples in another table 
+*Note, exactly ONE will be represented by a rounded arrow –) / SQL ONE will be represented with an arrow –> /
+
+
+
+
+STOPPED ON SLIDE # 28
