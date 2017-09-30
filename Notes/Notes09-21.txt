@@ -42,7 +42,3 @@ One->Many: there is either 0 or 1 connection that is related to 0 or more entiti
 One->One: A tuple in one table will relate to 0 or 1 tuples in another table 
 *Note, exactly ONE will be represented by a rounded arrow –) / SQL ONE will be represented with an arrow –> /
 
-
-
-
-STOPPED ON SLIDE # 28
