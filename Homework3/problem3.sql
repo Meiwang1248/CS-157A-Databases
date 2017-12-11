@@ -1,4 +1,4 @@
-/* PROBLEM 3*/
+ /* PROBLEM 3*/
 
 #a 
 CREATE TRIGGER LowPricePCTrigger 
@@ -20,7 +20,7 @@ BEGIN
 END;
 
 #b
-CREATE ASSERTION modelPresent
+CREATE TRIGGER modelPresent
 AFTER INSERT ON Printer
 CHECK (EXISTS
         (Select Product.model

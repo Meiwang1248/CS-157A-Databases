@@ -1,5 +1,4 @@
 import java.sql.*;
-import java.util.*;
 import java.sql.SQLException;
 
 public class Books
@@ -22,7 +21,7 @@ public class Books
             // Select all authors from the authorstable. Order the information
             // alphabetically by the author’s last name and first name.
 
-            String query1 = "select * from authors";
+            String query1 = "select * from authors ORDER BY firstName ASC, lastName ASC";
             ResultSet resultset = stmt.executeQuery(query1);
             while (resultset.next())
             {
@@ -43,7 +42,7 @@ public class Books
                 int publisherId = resultset2.getInt(1);
                 String publisherName = resultset2.getString(2);
                 System.out.println("Publisher Id:" + " " + publisherId
-                        + "PublisherName:" + publisherName);
+                        + " PublisherName:" + publisherName);
             }
             System.out.println(
                     "==========================================================================================");
@@ -54,15 +53,14 @@ public class Books
             for (int i = 1; i < 19; i++)
             {
                 String query3 = "Select title, isbn, year from titles where publisherId= "
-                        + i + " ";
+                        + i + "ORDER BY title ASC";
                 ResultSet resultset3 = stmt.executeQuery(query3);
                 while (resultset3.next())
                 {
                     String title = resultset3.getString(1);
                     String isbn = resultset3.getString(2);
                     String year = resultset3.getString(3);
-                    System.out.println("Title:" + title + "ISBN:" + title
-                            + "Year:" + year);
+                    System.out.println("Title:" + title + "ISBN: " + isbn + "Year:" + year);
                 }
             }
             System.out.println(
@@ -70,9 +68,9 @@ public class Books
 
             // ==========================================================================================
             // Add new author
-            String query4 = "insert into authors(authorId, firstname, lastname) values (21, 'Pulkit', 'Agarwal') ";
-            stmt.executeQuery(query4);
-            String sub = "Select firstname, lastname from authors where authorid= 21";
+            String query4 = "insert into authors(authorId, firstname, lastname) values (25, 'Pulkit', 'Agarwal') ";
+            stmt.execute(query4);
+            String sub = "Select firstname, lastname from authors where authorid= 25";
             ResultSet rs = stmt.executeQuery(sub);
             while (rs.next())
             {
@@ -88,7 +86,7 @@ public class Books
             // Edit/Update the existing information about an author
 
             String query5 = "Update authors set firstname='Ahmed' where authorid=1";
-            stmt.executeQuery(query5);
+            stmt.execute(query5);
             String subquery = "Select * from authors";
             ResultSet rs2 = stmt.executeQuery(subquery);
             while (rs2.next())
@@ -104,7 +102,7 @@ public class Books
             // ==================================================================================================
             // Add a new title for an author
             String query6 = "Insert into titles(isbn, title, editionNumber, price) values ('1313123', 'Murder on the orient Express', 1234, 190)";
-            stmt.executeQuery(query6);
+            stmt.execute(query6);
             String sub3 = "Select * from titles";
             ResultSet rs3 = stmt.executeQuery(sub3);
             while (rs3.next())
@@ -122,11 +120,12 @@ public class Books
                         + " " + "PublisherId: " + publisher + " " + "Price: "
                         + price);
             }
-
+            System.out.println(
+                    "==========================================================================================");
             // ================================================================================================
             // Add new publisher
             String query7 = "Insert into publishers(publisherId, publishername) values( 24,'Pulkit')";
-            stmt.executeQuery(query7);
+            stmt.execute(query7);
             String sub4 = "Select * from publishers";
             ResultSet rs4 = stmt.executeQuery(sub4);
             while (rs4.next())
@@ -135,10 +134,12 @@ public class Books
                 String name = rs4.getString(2);
                 System.out.println("ID: " + id + " " + "Name: " + name);
             }
+            System.out.println(
+                    "==========================================================================================");
             // ===========================================================================================
             // Edit/Update the existing information about a publisher
             String query8 = "Update publishers set publishername ='Database' where publisherid=2";
-            stmt.executeQuery(query8);
+            stmt.execute(query8);
             String sub5 = "Select * from publishers";
             ResultSet rs5 = stmt.executeQuery(sub5);
             while (rs5.next())
@@ -147,6 +148,21 @@ public class Books
                 String name = rs5.getString(2);
                 System.out.println("ID: " + id + " " + "Name: " + name);
             }
+
+            String cleaningQuery = " DELETE\n" +
+                    "            FROM publishers\n" +
+                    "            WHERE publisherID = 24;\n" +
+                    "\n" +
+                    "            DELETE\n" +
+                    "            FROM authors\n" +
+                    "            WHERE authorID = 25;\n" +
+                    "\n" +
+                    "            DELETE\n" +
+                    "            FROM titles\n" +
+                    "            WHERE isbn = '1313123';";
+            stmt.execute(cleaningQuery);
+            System.out.println("\nready to go again");
+
 
             stmt.close();
 

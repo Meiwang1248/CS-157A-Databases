@@ -21,10 +21,10 @@ public class Tables
     {
         // Creating table Author
         String Table1 = "CREATE TABLE authors( "
-                + " authorID integer not null, " + " firstName varchar2(200), "
-                + " lastName varchar2(200), "
+                + " authorID integer not null, " + " firstName varchar(200), "
+                + " lastName varchar(200), "
                 + " CONSTRAINT constraint_pk_authorID PRIMARY KEY(authorID))";
-        String Table2 = "CREATE TABLE authorISBN( " + "authorID number(5), "
+        String Table2 = "CREATE TABLE authorISBN( " + "authorID INTEGER, "
                 + "isbn CHAR(10), "
                 + "CONSTRAINT constraint_fk_authorId FOREIGN KEY(authorID) REFERENCES authors(authorID)) ";
         // Creating table Publishers
@@ -36,9 +36,9 @@ public class Tables
         // Creating table publishers before titles so that foreign key
         // constraint can be applied to titles
         String Table4 = "CREATE TABLE titles( " + " isbn CHAR(20), "
-                + " title VARCHAR2(100), " + " editionNumber integer, "
+                + " title VARCHAR(100), " + " editionNumber integer, "
                 + " Year CHAR(4), " + " publisherID integer, "
-                + " price number(8,2), "
+                + " price INTEGER, "
                 + " CONSTRAINT constraint_pk_isbn PRIMARY KEY (isbn), "
                 + " CONSTRAINT constraint_fk_publisherId FOREIGN KEY ( publisherID ) REFERENCES publishers( publisherID ))";
         // Creating table AuthorISBN
